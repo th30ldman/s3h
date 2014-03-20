@@ -1,0 +1,14 @@
+# Example of hosts that frequently roll.
+Host 10.10.*
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+
+# Make sure you understand what controlmaster does security wise.
+Host *
+  ForwardX11 yes
+  ForwardAgent yes
+  ServerAliveCountMax 3
+  ServerAliveInterval 2
+  ControlMaster auto
+  ControlPath ~/.ssh/control-master/%r@%h:%p
+  ControlPersist no

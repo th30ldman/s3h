@@ -1,0 +1,24 @@
+# This is in general the fix for screen ssh agent forwarding.
+
+# This will link the auth sock to a generic file
+
+if test  "$SSH_AUTH_SOCK" ; then
+    net=`echo $SSH_CLIENT | cut -d. -f1 | cut -d' ' -f1`
+    if [ ${net} != "::1" ] && [ ${net} != "127" ]; then
+        ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
+    fi
+fi
+
+# unfortunately when you create a .ssh/sshrc or .ssh/rc script, the
+# xauth x11 cookie crap now needs to be done 'manually'
+
+if read proto cookie && [ -n "$DISPLAY" ]; then
+    if [ `echo $DISPLAY | cut -c1-10` = 'localhost:' ]; then
+        # X11UseLocalhost=yes
+        echo add unix:`echo $DISPLAY |
+        cut -c11-` $proto $cookie
+    else
+        # X11UseLocalhost=no
+        echo add $DISPLAY $proto $cookie
+    fi | xauth -q -
+fi
