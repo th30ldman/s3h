@@ -15,7 +15,6 @@ Terse instructions:
 
 On the host you ssh from:
 
-- sshrc, place in ~/.ssh/rc
 - config, customize and  merge in ~/.ssh/config
 - s3h, place in ~/bin or anywhere else in your exec path
 - place a suitable tmux.conf on the remote hosts. 
@@ -24,7 +23,7 @@ On the host you ssh from:
 
 On the hosts that you ssh to:
 - Include s3h.sh somewhere in your shell config (.bashrc, .profile)
-
+- sshrc, place in ~/.ssh/rc
 - Make sure that remote hosts have proper authorized keys, and ssh
   agent is running. It works without, but you'll be typing passphrases
   or passwords a lot more.
